@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SurvivorModelStoreContainer" CdmEntityContainer="SurvivorEntities1">
+    <EntitySetMapping Name="RESOURCES">
+      <EntityTypeMapping TypeName="SurvivorModel.RESOURCE">
+        <MappingFragment StoreEntitySet="RESOURCES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="SurvivorId" ColumnName="SurvivorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROBOTS">
+      <EntityTypeMapping TypeName="SurvivorModel.ROBOT">
+        <MappingFragment StoreEntitySet="ROBOTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="model" ColumnName="model" />
+          <ScalarProperty Name="serialNumber" ColumnName="serialNumber" />
+          <ScalarProperty Name="manufacturedDate" ColumnName="manufacturedDate" />
+          <ScalarProperty Name="category" ColumnName="category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SURVIVORS">
+      <EntityTypeMapping TypeName="SurvivorModel.SURVIVOR">
+        <MappingFragment StoreEntitySet="SURVIVORS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
+          <ScalarProperty Name="Reported" ColumnName="Reported" />
+          <ScalarProperty Name="Infected" ColumnName="Infected" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

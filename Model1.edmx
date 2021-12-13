@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SurvivorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="RESOURCES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="SurvivorId" Type="int" />
+        </EntityType>
+        <EntityType Name="ROBOTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="50" />
+          <Property Name="serialNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="manufacturedDate" Type="datetime2" Precision="7" />
+          <Property Name="category" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SURVIVORS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Age" Type="tinyint" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="IDNumber" Type="varchar" MaxLength="20" />
+          <Property Name="Reported" Type="int" />
+          <Property Name="Infected" Type="bit" />
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="8" />
+          <Property Name="Longitude" Type="decimal" Precision="11" Scale="8" />
+        </EntityType>
+        <Association Name="fk_SurvivorID">
+          <End Role="SURVIVORS" Type="Self.SURVIVORS" Multiplicity="0..1" />
+          <End Role="RESOURCES" Type="Self.RESOURCES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SURVIVORS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RESOURCES">
+              <PropertyRef Name="SurvivorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurvivorModelStoreContainer">
+          <EntitySet Name="RESOURCES" EntityType="Self.RESOURCES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROBOTS" EntityType="Self.ROBOTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SURVIVORS" EntityType="Self.SURVIVORS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_SurvivorID" Association="Self.fk_SurvivorID">
+            <End Role="SURVIVORS" EntitySet="SURVIVORS" />
+            <End Role="RESOURCES" EntitySet="RESOURCES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SurvivorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="RESOURCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SurvivorId" Type="Int32" />
+          <NavigationProperty Name="SURVIVOR" Relationship="Self.fk_SurvivorID" FromRole="RESOURCES" ToRole="SURVIVORS" />
+        </EntityType>
+        <EntityType Name="ROBOT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="serialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="manufacturedDate" Type="DateTime" Precision="7" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SURVIVOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Byte" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IDNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Reported" Type="Int32" />
+          <Property Name="Infected" Type="Boolean" />
+          <Property Name="Latitude" Type="Decimal" Precision="10" Scale="8" />
+          <Property Name="Longitude" Type="Decimal" Precision="11" Scale="8" />
+          <NavigationProperty Name="RESOURCES" Relationship="Self.fk_SurvivorID" FromRole="SURVIVORS" ToRole="RESOURCES" />
+        </EntityType>
+        <Association Name="fk_SurvivorID">
+          <End Role="SURVIVORS" Type="Self.SURVIVOR" Multiplicity="0..1" />
+          <End Role="RESOURCES" Type="Self.RESOURCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SURVIVORS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RESOURCES">
+              <PropertyRef Name="SurvivorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurvivorEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RESOURCES" EntityType="Self.RESOURCE" />
+          <EntitySet Name="ROBOTS" EntityType="Self.ROBOT" />
+          <EntitySet Name="SURVIVORS" EntityType="Self.SURVIVOR" />
+          <AssociationSet Name="fk_SurvivorID" Association="Self.fk_SurvivorID">
+            <End Role="SURVIVORS" EntitySet="SURVIVORS" />
+            <End Role="RESOURCES" EntitySet="RESOURCES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SurvivorModelStoreContainer" CdmEntityContainer="SurvivorEntities1">
+          <EntitySetMapping Name="RESOURCES">
+            <EntityTypeMapping TypeName="SurvivorModel.RESOURCE">
+              <MappingFragment StoreEntitySet="RESOURCES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SurvivorId" ColumnName="SurvivorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROBOTS">
+            <EntityTypeMapping TypeName="SurvivorModel.ROBOT">
+              <MappingFragment StoreEntitySet="ROBOTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="serialNumber" ColumnName="serialNumber" />
+                <ScalarProperty Name="manufacturedDate" ColumnName="manufacturedDate" />
+                <ScalarProperty Name="category" ColumnName="category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SURVIVORS">
+            <EntityTypeMapping TypeName="SurvivorModel.SURVIVOR">
+              <MappingFragment StoreEntitySet="SURVIVORS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
+                <ScalarProperty Name="Reported" ColumnName="Reported" />
+                <ScalarProperty Name="Infected" ColumnName="Infected" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

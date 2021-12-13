@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SurvivorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="RESOURCE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SurvivorId" Type="Int32" />
+    <NavigationProperty Name="SURVIVOR" Relationship="SurvivorModel.fk_SurvivorID" FromRole="RESOURCE" ToRole="SURVIVOR" />
+  </EntityType>
+  <EntityContainer Name="SurvivorEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="RESOURCES" EntityType="Self.RESOURCE" />
+    <EntitySet Name="SURVIVORS" EntityType="SurvivorModel.SURVIVOR" />
+    <AssociationSet Name="fk_SurvivorID" Association="SurvivorModel.fk_SurvivorID">
+      <End Role="SURVIVOR" EntitySet="SURVIVORS" />
+      <End Role="RESOURCE" EntitySet="RESOURCES" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SURVIVOR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Byte" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="IDNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Reported" Type="Int32" />
+    <Property Name="Infected" Type="Boolean" />
+    <Property Name="Latitude" Type="Decimal" Precision="10" Scale="8" />
+    <Property Name="Longitude" Type="Decimal" Precision="11" Scale="8" />
+    <NavigationProperty Name="RESOURCES" Relationship="SurvivorModel.fk_SurvivorID" FromRole="SURVIVOR" ToRole="RESOURCE" />
+  </EntityType>
+  <Association Name="fk_SurvivorID">
+    <End Type="SurvivorModel.SURVIVOR" Role="SURVIVOR" Multiplicity="0..1" />
+    <End Type="SurvivorModel.RESOURCE" Role="RESOURCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SURVIVOR">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RESOURCE">
+        <PropertyRef Name="SurvivorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
